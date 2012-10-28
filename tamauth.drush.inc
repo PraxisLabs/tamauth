@@ -1,7 +1,8 @@
 <?php
 /**
  * @file
- *   Tivoli Access Manager Authentication drush functions.
+ *
+ * TAM Authenication drush functions.
  */
 
 
@@ -24,12 +25,7 @@ function tamauth_drush_command() {
 }
 
 /**
- * tamauth command callback.
- *
- * @param string
- *   $user The name of the user to authenticate as.
- * @param string
- *   $groups comma separated list of groups the user belongs to.
+ * Callback for tamauth command.
  */
 function drush_tamauth($user, $groups) {
   global $base_url;
@@ -59,10 +55,22 @@ function drush_tamauth($user, $groups) {
   }
 
   preg_match_all('/Set-Cookie: (.*)\b/', $response, $cookies);
-  if(!isset($cookies[1][0])) {
+  if (!isset($cookies[1][0])) {
     return drush_set_error(dt('Cookie not found'));
   }
 
   drush_print($cookies[1][0]);
 }
 
+/**
+ * Get the settings from the cli
+ *
+ * @param
+ *  String - Name
+ * @return
+ *  The setting or NULL
+ */
+function tamauth_get_option($option) {
+  $options = drush_get_option_list($option);
+  return !empty($options) ? $options[0] : NULL;
+}
