@@ -1,3 +1,4 @@
 name = Tivoli Access Manager Authentication
 description = Authenticate users with IBM's Tivoli Access Manager (TAM).
+configure = admin/config/people/tamauth
 core = 7.x

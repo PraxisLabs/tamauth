@@ -18,8 +18,9 @@ function tamauth_menu() {
     'access callback' => TRUE,
     'type' => MENU_CALLBACK,
   );
-  $items['admin/config/tamauth'] = array(
+  $items['admin/config/people/tamauth'] = array(
     'title' => 'TAM Authentication',
+    'description' => 'Configure TAM Authentication',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('tamauth_settings_form'),
     'access arguments' => array('administer tamauth'),
@@ -95,14 +96,14 @@ function tamauth_set_roles($account, $tam_roles = array()) {
       unset($account->roles[$rid]);
     }
   }
-  
+
   //Grant
   foreach ($user_roles as $rid => $name) {
     if (in_array($name, $tam_roles)) {
       $account->roles[$rid] = $name;
     }
   }
-  
+
   user_save($account);
 }
 
