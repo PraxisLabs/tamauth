@@ -169,10 +169,8 @@ function tamauth_user_is_not_tam($name) {
  */
 function tamauth_get_tam_name_header() {
   $header = FALSE;
-  foreach (array('iv_user', 'iv_user_name') as $field) {
-    if (!empty($_SERVER['HTTP_' . strtoupper($field)])) {
-      $header = $_SERVER['HTTP_' . strtoupper($field)];
-    }
+  if (!empty($_SERVER['HTTP_' . strtoupper(variable_get('tamauth_name_header', 'iv_user'))])) {
+      $header = $_SERVER['HTTP_' . strtoupper(variable_get('tamauth_name_header', 'iv_user'))];
   }
   return $header;
 }
