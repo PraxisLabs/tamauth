@@ -56,7 +56,13 @@ function tamauth_page() {
 
   $name = tamauth_get_tam_name_header();
   $roles = tamauth_get_tam_groups_header();
-  $user = user_load_by_name($name);
+  if (!($user = user_load_by_name($name))) {
+    $user = user_save('', array('name' => $name,
+                                'pass' => user_password(16),
+                                'status' => 1,
+                                'roles' => array(DRUPAL_AUTHENTICATED_RID => 'authenticated user'),
+                      ));
+  }
   $role_map = variable_get('tamauth_map_roles', array());
   $roles_valid = (bool) count(array_intersect($roles, array_keys($role_map)));
 
