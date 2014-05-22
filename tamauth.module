@@ -56,13 +56,6 @@ function tamauth_page() {
 
   $name = tamauth_get_tam_name_header();
   $roles = tamauth_get_tam_groups_header();
-  if (!($user = user_load_by_name($name))) {
-    $user = user_save('', array('name' => $name,
-                                'pass' => user_password(16),
-                                'status' => 1,
-                                'roles' => array(DRUPAL_AUTHENTICATED_RID => 'authenticated user'),
-                      ));
-  }
   $role_map = variable_get('tamauth_map_roles', array());
   $roles_valid = (bool) count(array_intersect($roles, array_keys($role_map)));
 
@@ -78,7 +71,7 @@ function tamauth_page() {
     drupal_access_denied();
     drupal_exit();
   }
-
+  watchdog('tamauth', t('Logging in user @name because TAM headers are right', array('@name' => $name)));
   user_external_login_register($name, 'tamauth');
   tamauth_set_roles($user, tamauth_map_roles($roles));
   tamauth_set_user_mapped_header_fields($user);
