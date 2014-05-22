@@ -183,11 +183,11 @@ function tamauth_get_tam_name_header() {
  */
 function tamauth_get_tam_groups_header() {
   $groups = array();
-  if (empty($_SERVER['HTTP_IV_GROUPS'])) {
+  if (empty($_SERVER['HTTP_' . strtoupper(variable_get('tamauth_groups_header', 'iv_groups'))])) {
     return $groups;
   }
 
-  $entries = explode(',', $_SERVER['HTTP_IV_GROUPS']);
+  $entries = explode(',', $_SERVER['HTTP_' . strtoupper(variable_get('tamauth_groups_header', 'iv_groups'))]);
   foreach ($entries as $group) {
     $groups[] = trim($group, ' "');
   }
